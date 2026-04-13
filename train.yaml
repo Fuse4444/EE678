@@ -1,0 +1,33 @@
+# configs/train.yaml
+# ─────────────────────────────────────────────
+# Data
+# ─────────────────────────────────────────────
+data_root: "./data/DIV2K"       # expects train/ and val/ subfolders
+image_size: 256                  # HR patch size; LL band will be 128×128
+
+# ─────────────────────────────────────────────
+# Diffusion (Stage 1)
+# ─────────────────────────────────────────────
+T: 1000                          # diffusion timesteps
+in_ch: 3                         # RGB
+unet_base_ch: 64                 # U-Net channel multiplier
+time_dim: 256
+
+epochs: 100
+batch_size: 8
+lr: 0.0001
+save_every: 10
+ckpt_dir: "./checkpoints"
+
+# ─────────────────────────────────────────────
+# HF Predictor (Stage 2)
+# ─────────────────────────────────────────────
+hf_base_ch: 48
+hf_res_blocks: 4
+hf_epochs: 50
+
+# ─────────────────────────────────────────────
+# Evaluation checkpoints (used with --stage eval)
+# ─────────────────────────────────────────────
+diff_ckpt: "./checkpoints/diffusion_ep100.pt"
+hf_ckpt: "./checkpoints/hf_predictor_final.pt"
